@@ -1,6 +1,6 @@
 # LEAP Education
 ## EAEE4000 Machine Learning (ML) for Environmental Engineering and Science
-### Spring 2022 ([Syllabus](/CourseInfo/CPC-Spring2022-Syllabus.md))
+### Fall 2022 
 
 A project-based learning course to devlop understanding of the latest ML techniques
 W 4:10-6:40PM
