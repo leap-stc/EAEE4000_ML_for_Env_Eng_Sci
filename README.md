@@ -1,6 +1,6 @@
 # LEAP Education
 ## EAEE4000 Machine Learning (ML) for Environmental Engineering and Science
-### Fall 2022 
+### Fall 2022 https://courseworks2.columbia.edu/courses/154958
 
 A project-based learning course to devlop understanding of the latest ML techniques
 W 4:10-6:40PM
