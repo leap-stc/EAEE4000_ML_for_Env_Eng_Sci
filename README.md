@@ -19,3 +19,5 @@ Grading: course grading will be split into 35% for the in-class presentation of 
 
 Note the following linked class: COMS E6998, illustrating applications of machine learning to various topics in climate change.
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Weiwei047/EAEE4000_ML_for_Env_Eng_Sci/HEAD)
+
