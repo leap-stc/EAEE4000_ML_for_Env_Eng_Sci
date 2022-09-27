@@ -25,7 +25,7 @@ def prepare_predictor(data_sets, data_path,time_reindex=True):
     length_all = []
     
     for file in data_sets:
-        data = xr.open_dataset(data_path + f"inputs_{file}.nc")
+        data = xr.open_dataset(os.path.join(data_path, f"inputs_{file}.nc"))
         X_all.append(data)
         length_all.append(len(data.time))
     
@@ -45,7 +45,7 @@ def prepare_predictand(data_sets,data_path,time_reindex=True):
     length_all = []
     
     for file in data_sets:
-        data = xr.open_dataset(data_path + f"outputs_{file}.nc")
+        data = xr.open_dataset(os.path.join(data_path, f"outputs_{file}.nc"))
         Y_all.append(data)
         length_all.append(len(data.time))
     
@@ -80,3 +80,15 @@ def normalize(data, var, meanstd_dict):
     mean = meanstd_dict[var][0]
     std = meanstd_dict[var][1]
     return (data - mean)/std
+
+
+def mean_std_plot(data,color,label,ax):
+    
+    mean = data.mean(['latitude','longitude'])
+    std  = data.std(['latitude','longitude'])
+    yr   = data.time.values
+
+    ax.plot(yr,mean,color=color,label=label,linewidth=4)
+    ax.fill_between(yr,mean+std,mean-std,facecolor=color,alpha=0.4)
+    
+    return yr, mean
