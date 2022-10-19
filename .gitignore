@@ -1,0 +1,6 @@
+
+*.nc
+*.h5
+*.pyc
+*.gz
+.DS_Store
