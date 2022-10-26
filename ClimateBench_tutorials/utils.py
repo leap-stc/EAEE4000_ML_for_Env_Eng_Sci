@@ -60,8 +60,8 @@ def prepare_predictand(data_sets,data_path,time_reindex=True):
 
 
 def get_rmse(truth, pred):
-    weights = np.cos(np.deg2rad(truth.lat))
-    return np.sqrt(((truth-pred)**2).weighted(weights).mean(['lat', 'lon'])).data.mean()
+    weights = np.cos(np.deg2rad(truth.latitude))
+    return np.sqrt(((truth-pred)**2).weighted(weights).mean(['latitude', 'longitude'])).data.mean()
 
 def plot_history(history):
     plt.figure()
@@ -75,12 +75,12 @@ def plot_history(history):
     
     
     
+    
 # Utilities for normalizing the input data
 def normalize(data, var, meanstd_dict):
     mean = meanstd_dict[var][0]
     std = meanstd_dict[var][1]
     return (data - mean)/std
-
 
 def mean_std_plot(data,color,label,ax):
     
