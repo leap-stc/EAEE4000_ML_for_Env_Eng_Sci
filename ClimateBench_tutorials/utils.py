@@ -4,11 +4,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import xarray as xr
 from glob import glob
+import gcsfs
+from tqdm.notebook import tqdm
 
 
 def make_dir(path):
     if os.path.exists(path) is False:
         os.makedirs(path)
+        
+def open_dataset(file_path):
+    """Flexible opener that can handle both local files (legacy) and cloud urls. IMPORTANT: For this to work the `file_path` must be provided without extension."""
+    if 'gs://' in file_path:
+        store = f"{file_path}.zarr"
+        ds = xr.open_dataset(store, engine='zarr')
+    else:
+        ds = xr.open_dataset(f"{file_path}.nc")
+        # add information to sort and label etc
+        ds.attrs['file_name']
+    return ds
+        
         
         
 def prepare_predictor(data_sets, data_path,time_reindex=True):
@@ -24,8 +38,8 @@ def prepare_predictor(data_sets, data_path,time_reindex=True):
     X_all      = []
     length_all = []
     
-    for file in data_sets:
-        data = xr.open_dataset(os.path.join(data_path, f"inputs_{file}.nc"))
+    for file in tqdm(data_sets):
+        data = open_dataset(f"{data_path}inputs_{file}")
         X_all.append(data)
         length_all.append(len(data.time))
     
@@ -44,8 +58,8 @@ def prepare_predictand(data_sets,data_path,time_reindex=True):
     Y_all = []
     length_all = []
     
-    for file in data_sets:
-        data = xr.open_dataset(os.path.join(data_path, f"outputs_{file}.nc"))
+    for file in tqdm(data_sets):
+        data = open_dataset(f"{data_path}outputs_{file}")
         Y_all.append(data)
         length_all.append(len(data.time))
     
@@ -72,9 +86,6 @@ def plot_history(history):
     plt.plot(history.epoch, np.array(history.history['val_loss']),
            label = 'Val loss')
     plt.legend()
-    
-    
-    
     
 # Utilities for normalizing the input data
 def normalize(data, var, meanstd_dict):
